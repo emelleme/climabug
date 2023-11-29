@@ -1,0 +1,37 @@
+<form hx-post="/calculate-mao" hx-trigger="submit" hx-target="#mao-result" class="space-y-4">
+  <div>
+    <label for="principal" class="block">Principal Amount:</label>
+    <input type="number" id="principal" name="principal" class="input input-bordered w-full" required>
+</div>
+<div>
+    <label for="rate" class="block">Annual Interest Rate (%):</label>
+    <input type="number" id="rate" name="rate" class="input input-bordered w-full" step="0.01" required>
+</div>
+<div>
+    <label for="time" class="block">Time (Years):</label>
+    <input type="number" id="time" name="time" class="input input-bordered w-full" required>
+</div>
+<div>
+    <label for="compound" class="block">Compounds per Year:</label>
+    <input type="number" id="compound" name="compound" class="input input-bordered w-full" required>
+</div>
+    <button id="calcBtn" class="btn btn-primary" _="on click halt the event log 'calculating..'">Calculate</button>
+</form>
+
+  <div class="divider divider-success">Results</div>
+  <div class="card w-full bg-neutral text-neutral-content">
+    <div class="card-body items-center text-center">
+      <h2 class="card-title">Future Value!</h2>
+      <div id="ci-result" class="mt-8 text-2xl" 
+    _="on click from #calcBtn or change or keyup from #principal and #rate and #time and #compound
+        set principal to Number(document.getElementById('principal').value)
+        set rate to Number(document.getElementById('rate').value) / 100
+        set time to Number(document.getElementById('time').value)
+        set compound to Number(document.getElementById('compound').value)
+        set amount to principal * (Math.pow((1 + ((rate/100) / compound)), compound * time))
+        set interest to (amount - principal)
+        put '$' + amount.toFixed(2) + ' Interest: $' + interest.toFixed(2) into me">
+    <!-- Results will be displayed here -->
+</div>
+
+  </div>

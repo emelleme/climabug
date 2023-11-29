@@ -1,0 +1,49 @@
+<form id="aprForm" class="space-y-4">
+  <!-- Loan Amount -->
+  <div class="mb-4">
+      <label for="loanAmount" class="block text-gray-700 text-sm font-bold mb-2">Loan Amount:</label>
+      <input type="number" id="loanAmount" name="loanAmount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter loan amount">
+  </div>
+
+  <!-- Interest Rate -->
+  <div class="mb-4">
+      <label for="interest-rate" class="block text-gray-700 text-sm font-bold mb-2">Annual Interest Rate (%):</label>
+      <input type="number" step="0.01" id="interestRate" name="interestRate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter base interest rate">
+  </div>
+
+  <!-- Loan Term -->
+  <div class="mb-4">
+      <label for="loanTerm" class="block text-gray-700 text-sm font-bold mb-2">Loan Term (years):</label>
+      <input type="number" id="loanTerm" name="loanTerm" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter loan term">
+  </div>
+
+  <!-- Additional Fees -->
+  <div class="mb-6">
+      <label for="addFees" class="block text-gray-700 text-sm font-bold mb-2">Additional Fees:</label>
+      <input type="number" id="addFees" name="additionalFees" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="the loan closing costs e.g. origination fee, broker fees, etc.">
+  </div>
+
+  <!-- Submit Button -->
+  <div class="flex items-center justify-between">
+      <button id="calcBtn" class="btn btn-primary" type="button" _="on click halt the event log 'calculating..'">Calculate APR</button>
+  </div>
+</form>
+
+<div class="divider divider-success">Results</div>
+<div class="card w-full bg-neutral text-neutral-content">
+  <div class="card-body items-center text-center">
+      <h2 class="card-title">APR!</h2>
+      <div id="apr-result" class="mt-8 text-2xl" 
+      _="on click from #calcBtn or change or keyup from #loanAmount and #interestRate and #loanTerm and #addFees 
+         set loanAmount to Number(document.getElementById('loanAmount').value)
+         set interestRate to Number(document.getElementById('interestRate').value)
+         set monthlyIR to Number((interestRate / 12) / 100)
+         
+         set loanTerm to Number(document.getElementById('loanTerm').value)
+         set monthlyPayment to Number(loanAmount * ((interestRate/12) / (1 - Math.pow(1 + interestRate, -loanTerm))))
+         set additionalFees to Number(document.getElementById('addFees').value)
+         set apr to ((monthlyPayment * 12) - loanAmount).toFixed(2)
+         log monthlyPayment
+         put apr + '%' into me">
+ </div>
+  </div>

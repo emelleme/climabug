@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Climabug Chatbot</title>
+<style>
+  #climabug-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: white; /* You can change this to match your site's theme */
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #climabug-image {
+    max-width: 400px; /* Adjust as needed */
+    transition: filter 0.1s; /* Smooth transition for brightness changes */
+  }
+
+  #climabug-test-btn {
+  padding: 5px 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#climabug-test-btn:active {
+  background-color: #3e8e41;
+}
+
+
+  #climabug-text-input, #climabug-speech-btn {
+    margin-top: 10px;
+  }
+
+  #climabug-text-input {
+    width: calc(100% - 20px); /* Full width minus padding */
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  #climabug-speech-btn {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  #climabug-speech-btn:active {
+    background-color: #3e8e41;
+  }
+</style>
+</head>
+<body>
+  <div id="climabug-container">
+    <img src="/assets/green-bug.png" alt="Climabug" id="climabug-image"/>
+    <input type="text" id="climabug-text-input" placeholder="Type your message here..." />
+    <button id="climabug-speech-btn">Hold to Speak</button>
+    <button id="climabug-test-btn">Test Microphone Input</button>
+
+    <audio id="climabug-audio" hidden></audio>
+  </div>
+
+<script src="main.js"></script>
+</body>
+</html>

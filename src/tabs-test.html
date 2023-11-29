@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Real Estate Financial Calculators">
+  <meta name="description" content="Access a variety of financial calculators for real estate investors, including Compound Interest and APR calculators.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.yourwebsite.com/">
+  <meta property="og:title" content="Real Estate Financial Calculators">
+  <meta property="og:description" content="Access a variety of financial calculators for real estate investors, including Compound Interest and APR calculators.">
+  <meta property="og:image" content="https://www.yourwebsite.com/images/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://www.yourwebsite.com/">
+  <meta property="twitter:title" content="Real Estate Financial Calculators">
+  <meta property="twitter:description" content="Access a variety of financial calculators for real estate investors, including Compound Interest and APR calculators.">
+  <meta property="twitter:image" content="https://www.yourwebsite.com/images/twitter-image.jpg">
+
+    <title>Real Estate MAO Calculator</title>
+    <link href="./styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar bg-neutral text-neutral-content">
+      <button class="btn btn-ghost text-xl">Real Estate Calculators</button>
+    </div>
+    <div class="preview border-base-300 bg-base-100 rounded-b-box rounded-se-box flex min-h-[6rem] min-w-[18rem] max-w-4xl flex-wrap items-center justify-center gap-2 overflow-x-hidden bg-cover bg-top p-4 [border-width:var(--tab-border)] undefined">
+      <div class="tabs tabs-boxed">
+        <input type="radio" name="my_tabs_2" class="tab" aria-label="MAO" checked />
+        <div class="tab-content bg-base-100 border-base-300 rounded-box p-10">
+          
+            <form hx-post="/calculate-mao" hx-trigger="submit" hx-target="#mao-result" class="space-y-4">
+            <div>
+                <label for="arv" class="block">After Repair Value (ARV):</label>
+                <input type="number" id="arv" name="arv" class="input input-bordered w-full">
+            </div>
+            <div>
+                <label for="repairs" class="block">Repair Costs:</label>
+                <input type="number" id="repairs" name="repairs" class="input input-bordered w-full">
+            </div>
+            <div>
+                <label for="profit" class="block">Desired Profit Margin (%):</label>
+                <input type="number" id="profit" name="profit" class="input input-bordered w-full">
+            </div>
+            <button type="submit" class="btn btn-primary">Calculate</button>
+        </form>
+
+          <div class="divider divider-success">Results</div>
+          <div class="card w-full bg-neutral text-neutral-content">
+            <div class="card-body items-center text-center">
+              <h2 class="card-title">Maximum Allowable Offer!</h2>
+              <div id="mao-result" class="mt-8 text-2xl"></div>
+              <!-- <div class="card-actions justify-end">
+                <button class="btn btn-primary">Accept</button>
+                <button class="btn btn-ghost">Deny</button>
+              </div> -->
+            </div>
+          </div>
+        
+        </div>
+
+        <input type="radio" name="my_tabs_2" class="tab" aria-label="Compound Interest" />
+        <div class="tab-content bg-base-100 border-base-300 rounded-box p-10">
+            <form hx-post="/calculate-compound-interest" hx-trigger="submit" hx-target="#ci-result"  class="space-y-4">
+              <div>
+                  <label for="principal" class="block">Principal Amount:</label>
+                  <input type="number" id="principal" name="principal" class="input input-bordered w-full" required>
+              </div>
+              <div>
+                  <label for="rate" class="block">Annual Interest Rate (%):</label>
+                  <input type="number" id="rate" name="rate" class="input input-bordered w-full" step="0.01" required>
+              </div>
+              <div>
+                  <label for="time" class="block">Time (Years):</label>
+                  <input type="number" id="time" name="time" class="input input-bordered w-full" required>
+              </div>
+              <div>
+                  <label for="compound" class="block">Compounds per Year:</label>
+                  <input type="number" id="compound" name="compound" class="input input-bordered w-full" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Calculate</button>
+          </form>
+
+          <div class="divider divider-success">Results</div>
+          <div class="card w-full bg-neutral text-neutral-content">
+            <div class="card-body items-center text-center">
+              <h2 class="card-title">Future Value!</h2>
+              <div id="ci-result" class="mt-8 text-2xl"></div>
+              <!-- <div class="card-actions justify-end">
+                <button class="btn btn-primary">Accept</button>
+                <button class="btn btn-ghost">Deny</button>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <input type="radio" name="my_tabs_2" class="tab" aria-label="APR Calculator" />
+        <div class="tab-content bg-base-100 border-base-300 rounded-box p-10">Coming Soon!</div>
+      </div>
+        
+      
+        
+    </div>
+    <script src="https://unpkg.com/htmx.org@1.9.8"></script>
+    <script>
+      document.addEventListener('htmx:configRequest', (event) => {
+    if (event.detail.path === '/calculate-mao') {
+        event.preventDefault();
+        // Add your compound interest calculation logic here
+      let arv = parseFloat(document.getElementById('arv').value);
+      let repairs = parseFloat(document.getElementById('repairs').value);
+      let profitMargin = parseFloat(document.getElementById('profit').value) / 100;
+
+      let mao = arv * (1 - profitMargin) - repairs;
+      // document.getElementById('result').textContent = `$${mao.toFixed(2)}`;
+        htmx.trigger("#mao-result", "htmx:afterRequest", {result: `$${mao.toFixed(2)}`});
+        
+    }
+    // Handle other calculator logic similarly
+    if(event.detail.path === '/calculate-compound-interest') {
+      event.preventDefault();
+      const principal = parseFloat(document.getElementById('principal').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+      const time = parseFloat(document.getElementById('time').value);
+      const compound = parseInt(document.getElementById('compound').value);
+
+      const amount = principal * Math.pow((1 + (rate / 100) / compound), compound * time);
+      const interest = amount - principal;
+
+      // document.getElementById('result').textContent = `$${amount.toFixed(2)}, Interest: $${interest.toFixed(2)}`;
+      htmx.trigger("#ci-result", "htmx:afterRequest", {result: `$${amount.toFixed(2)}, Interest: $${interest.toFixed(2)}`});
+    }
+});
+
+document.querySelector('#mao-result').addEventListener('htmx:afterRequest', (event) => {
+
+    // Access passed data
+    let result =event.detail.result; // Logs 'test'
+    document.querySelector('#mao-result').innerHTML = result;
+  
+});
+
+document.querySelector('#ci-result').addEventListener('htmx:afterRequest', (event) => {
+
+    // Access passed data
+    let result =event.detail.result; // Logs 'test'
+    document.querySelector('#ci-result').innerHTML = result;
+  
+});
+    </script>
+</body>
+</html>

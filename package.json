@@ -1,0 +1,26 @@
+{
+  "name": "real-estate-mao-calculator",
+  "version": "1.0.0",
+  "description": "A simple Real Estate MAO Calculator",
+  "scripts": {
+    "build-css": "tailwindcss -o ./dist/styles.css --minify",
+    "build-html": "cpx \"./src/**/*.html\" ./dist/",
+    "build-js": "cpx \"./src/**/*.js\" ./dist/",
+    "build-assets": "cpx \"./src/assets/**/*.*\" ./dist/assets/",
+    "build": "mkdir -p dist && npm run build-css && npm run build-html && npm run build-js && npm run build-assets",
+    "dev": "bun run build && bun run index.ts"
+  },
+  "module": "index.ts",
+  "devDependencies": {
+    "bun-types": "^1.0.1",
+    "nodemon": "^3.0.1",
+    "cpx": "^1.5.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "autoprefixer": "^10.4.16",
+    "daisyui": "^4.0.4",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
+  }
+}
